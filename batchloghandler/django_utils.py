@@ -1,7 +1,7 @@
-import logging
 import batchloghandler
 
 LOGGER_NAMES = []
+
 
 def reset_logger_list():
     global LOGGER_NAMES
@@ -21,10 +21,10 @@ class Middleware(object):
 
     def process_exception(self, request, exception):
         for name in LOGGER_NAMES:
+            batchloghandler.flush(name)
             batchloghandler.stop(name)
 
     def process_response(self, request, response):
         for name in LOGGER_NAMES:
             batchloghandler.stop(name)
         return response
-
